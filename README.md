@@ -1,8 +1,8 @@
 # Zabbix/grafana Integration Project
 
-Integration Zabbix/Grafana, Zabbix personalized items and templates by Eder, Grafana Dashboards to display zabbix metrics.
-Script to install zabbix agent in windows 64 and 32 bits machines if it is not installed, WMI configuration to recongnize which
-architecture the pc is running and install the respective version of zabbix agent. Group Policy to run the script on Active Directory.
+Integration Zabbix/Grafana, Zabbix personalized items and templates by Eder, Grafana Dashboards to display Zabbix metrics.
+Script to install Zabbix agent in windows 64 and 32 bits machines if it is not installed, WMI configuration to recognize which
+architecture the pc is running and install the respective version of Zabbix agent. Group Policy to run the script on Active Directory.
 
 <h1 align="center"> Zabbix/Grafana Integration </h1>
 
@@ -14,4 +14,8 @@ architecture the pc is running and install the respective version of zabbix agen
 ![Windows Grafana Playlist 1 Zabbix Metrics](https://user-images.githubusercontent.com/99426154/202269960-7417a197-457b-4fad-a8f0-e653d45664ef.gif)
 
 
-<h4 align="center">  Zabbix is a monitoring system, that allow you to get all kinds of information out of different types of devices, like computers, servers, routers, etc. Grafana is a tool used to display Dashboards with data from different data sources. This Project is an integration of the two systems I have made for a particular purpose. The Dashboards can be downloaded and imported inside of Grafana. The Zabbix Template and items can also be imported insed of Zabbix.</h4>
+<h4 align="center">  Zabbix is a monitoring system, that allows you to get all kinds of information out of different types of devices, like computers, servers, routers, etc. Grafana is a tool used to display Dashboards with data from different data sources. This Project is an integration of the two systems I have made for a particular purpose. The Dashboards can be downloaded and imported inside Grafana. The Zabbix Template and items can also be imported inside Zabbix.</h4>
+
+<h4 align="left"> Kerio Control Firewall Template: 31 Items using SNMP oid's.
+  Windows Template by Eder: 10 items using bat and wmi commands and 2 triggers.
+  Most windows commands are used to monitor changes in files, and it was required in a very specific environment. 2 Items to monitor USB storage drivers connected to USB ports, and the Path of the drive, are also required in a very specific situation. Triggers activate and a USB storage drive is connected. </h5>
