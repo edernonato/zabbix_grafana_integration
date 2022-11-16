@@ -1,6 +1,6 @@
-# zabbix_grafana_integration Project
+# Zabbix/grafana Integration Project
 
-# Integration Zabbix/Grafana, Zabbix personalized items and templates by Eder, Grafana Dashboards to display zabbix metrics.
+Integration Zabbix/Grafana, Zabbix personalized items and templates by Eder, Grafana Dashboards to display zabbix metrics.
 Script to install zabbix agent in windows 64 and 32 bits machines if it is not installed, WMI configuration to recongnize which
 architecture the pc is running and install the respective version of zabbix agent. Group Policy to run the script on Active Directory.
 
