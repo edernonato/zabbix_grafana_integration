@@ -14,12 +14,4 @@ architecture the pc is running and install the respective version of zabbix agen
 ![Windows Grafana Playlist 1 Zabbix Metrics](https://user-images.githubusercontent.com/99426154/202269960-7417a197-457b-4fad-a8f0-e653d45664ef.gif)
 
 
-![ultraretro2](https://user-images.githubusercontent.com/99426154/200126552-38cda494-6a5c-4d28-80df-dac8b403ddd5.png)
-
-![Badge em Desenvolvimento](http://img.shields.io/static/v1?label=STATUS&message=In%20Development&color=GREEN&style=for-the-badge)
-
-
-<h4 align="center">     :construction:  Project in its initial state.  :construction:</h4>
-
-
-<h4 align="center">     Ultra Retro is a multi emulator system, able to unify all the main console emulators in a single place.</h4>
+<h4 align="center">  Zabbix is a monitoring system, that allow you to get all kinds of information out of different types of devices, like computers, servers, routers, etc. Grafana is a tool used to display Dashboards with data from different data sources. This Project is an integration of the two systems I have made for a particular purpose. The Dashboards can be downloaded and imported inside of Grafana. The Zabbix Template and items can also be imported insed of Zabbix.</h4>
