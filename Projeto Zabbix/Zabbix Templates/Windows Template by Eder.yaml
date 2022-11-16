@@ -1,0 +1,101 @@
+zabbix_export:
+  version: '5.4'
+  date: '2022-11-16T19:31:26Z'
+  groups:
+    -
+      uuid: 1525c35a49b84643b78e505d135a1967
+      name: 'Windows Servers'
+  templates:
+    -
+      uuid: 710ea7ae6bd74dd292335b3cda19e5b6
+      template: 'Window Template By Eder'
+      name: 'Window Template By Eder'
+      groups:
+        -
+          name: 'Windows Servers'
+      items:
+        -
+          uuid: d04b539fcbbd4e75a04f64da0d0ef54c
+          name: 'USB Storage Device Detected'
+          type: ZABBIX_ACTIVE
+          key: 'system.run["wmic logicaldisk where drivetype=2 get DeviceID, VolumeName, Description"]'
+          trends: '0'
+          value_type: TEXT
+          triggers:
+            -
+              uuid: 56e65ee3f225497fb8dea96fe7fa43b2
+              expression: 'change(/Window Template By Eder/system.run["wmic logicaldisk where drivetype=2 get DeviceID, VolumeName, Description"])=1'
+              name: 'USB Storage Device Conected'
+              status: DISABLED
+              priority: DISASTER
+            -
+              uuid: e833d9e394284d31a86ac44c5f966910
+              expression: 'last(/Window Template By Eder/system.run["wmic logicaldisk where drivetype=2 get DeviceID, VolumeName, Description"],#1)<>"No Instance(s) Available."'
+              name: 'USB Storage Device Conected'
+              priority: DISASTER
+        -
+          uuid: 9dcaa8dc0a3d4a0488db809e44fee705
+          name: 'Check Files C:/ time Test'
+          key: 'system.run[dir "c:/"]'
+          delay: '1h;10/1-7,17:55-17:56'
+          trends: '0'
+          value_type: TEXT
+        -
+          uuid: 34b044c9516c42cd8f7060491e004b08
+          name: 'Check Files C:/Outlook'
+          key: 'system.run[dir "c:/Outlook"]'
+          delay: 1m;wd1-5h16-17
+          trends: '0'
+          value_type: TEXT
+        -
+          uuid: 692e1818315749e8b131d4983ca8c767
+          name: 'Check Files C:/ Test time'
+          key: 'system.run[dir "c:/Test"]'
+          delay: '1m;50s/1-7,17:35-17:38'
+          trends: '0'
+          value_type: TEXT
+        -
+          uuid: 7549f5c8f2e4475f868058355b50a3a2
+          name: 'Usuários que usaram o computador'
+          type: ZABBIX_ACTIVE
+          key: 'system.run[dir "C:\users"]'
+          trends: '0'
+          value_type: LOG
+        -
+          uuid: a7854593f75040b4b5e77ec8a82598f3
+          name: Username
+          key: 'system.run[wmic /node: {HOST.IP} computersystem get username]'
+          trends: '0'
+          value_type: TEXT
+        -
+          uuid: 7f3a663616cf45a1b680aebc04b8085d
+          name: 'Directory of USB Storage'
+          type: DEPENDENT
+          key: usb.storage.directory
+          delay: '0'
+          trends: '0'
+          value_type: TEXT
+          preprocessing:
+            -
+              type: REGEX
+              parameters:
+                - 'Disk(.*)'
+                - \1
+          master_item:
+            key: 'system.run["wmic logicaldisk where drivetype=2 get DeviceID, VolumeName, Description"]'
+        -
+          uuid: 6e1a62b650d5465faed11279f47b0132
+          name: 'Check File change'
+          key: 'vfs.file.cksum[C:\Test\new.txt]'
+        -
+          uuid: 2bb8aa514467427782a209d523150ff5
+          name: 'Check Outlook.pst'
+          key: 'vfs.file.size[C:/Outlook/Outlook Eder.pst]'
+          delay: 1s
+          units: B
+        -
+          uuid: 772993ce7f334290a3d7d40db2fb47d6
+          name: 'Check Test'
+          type: ZABBIX_ACTIVE
+          key: 'vfs.file.size[C:/Outlook/test.txt]'
+          units: B

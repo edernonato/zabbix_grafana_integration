@@ -1,0 +1,615 @@
+zabbix_export:
+  version: '5.4'
+  date: '2021-07-10T05:38:35Z'
+  groups:
+    -
+      uuid: dc579cd7a1a34222933f24f52a68bcd8
+      name: 'Linux servers'
+  templates:
+    -
+      uuid: 505bcca01c1240699f49ca2d0f36dcc1
+      template: 'Kerio Control Firewall'
+      name: 'Kerio Control Firewall'
+      groups:
+        -
+          name: 'Linux servers'
+      items:
+        -
+          uuid: 6aecb6238b9b47888562b642070cce93
+          name: 'ICMP ping'
+          type: SIMPLE
+          key: icmpping
+          history: 1w
+          tags:
+            -
+              tag: Application
+              value: Status
+        -
+          uuid: b7d1cabebca14138bba5518d67c3965a
+          name: 'ICMP loss'
+          type: SIMPLE
+          key: icmppingloss
+          history: 1w
+          value_type: FLOAT
+          units: '%'
+          tags:
+            -
+              tag: Application
+              value: Status
+        -
+          uuid: 905b6726a9d6482ab86d2beae386011f
+          name: 'ICMP response time'
+          type: SIMPLE
+          key: icmppingsec
+          history: 1w
+          value_type: FLOAT
+          units: s
+          tags:
+            -
+              tag: Application
+              value: Status
+        -
+          uuid: 67c29a45966a4617b393434107b0446b
+          name: 'SNMP traps (fallback)'
+          type: SNMP_TRAP
+          key: snmptrap.fallback
+          history: 2w
+          trends: '0'
+          value_type: LOG
+          description: 'Item is used to collect all SNMP traps unmatched by other snmptrap items'
+          logtimefmt: 'hh:mm:sszyyyy/MM/dd'
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: b248e01a46f146289fdae5c7d82670bd
+          name: 'System contact details'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.4.0
+          key: 'system.contact[sysContact.0]'
+          delay: 1h
+          history: 2w
+          trends: '0'
+          value_type: CHAR
+          description: |
+            MIB: SNMPv2-MIB
+            The textual identification of the contact person for this managed node, together with information on how to contact this person.  If no contact information is known, the value is the zero-length string.
+          inventory_link: CONTACT
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: e10a2568d9974f6b9d8459941f1717be
+          name: 'CPU idle time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.53.0
+          key: 'system.cpu.idle[ssCpuRawIdle.0]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: |
+            MIB: UCD-SNMP-MIB
+            The time the CPU has spent doing nothing.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: b2e0d0b0a51e4b35908e6c197f1c523f
+          name: 'CPU interrupt time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.56.0
+          key: 'system.cpu.interrupt[ssCpuRawInterrupt.0]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: |
+            MIB: UCD-SNMP-MIB
+            The amount of time the CPU has been servicing hardware interrupts.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: ad19db5c40854b2ead373e9d7425144a
+          name: 'CPU iowait time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.54.0
+          key: 'system.cpu.iowait[ssCpuRawWait.0]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: |
+            MIB: UCD-SNMP-MIB
+            Amount of time the CPU has been waiting for I/O to complete.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: 4b751892c3934742a39cd31c2ee01498
+          name: 'Load average (1m avg)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.10.1.3.1
+          key: 'system.cpu.load.avg1[laLoad.1]'
+          history: 7d
+          value_type: FLOAT
+          description: 'MIB: UCD-SNMP-MIB'
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: 2e14d0efaea84d5a860ad93886b8c60a
+          name: 'Load average (5m avg)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.10.1.3.2
+          key: 'system.cpu.load.avg5[laLoad.2]'
+          history: 7d
+          value_type: FLOAT
+          description: 'MIB: UCD-SNMP-MIB'
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: e873c9aee27c40649bb74de6d35fed99
+          name: 'Load average (15m avg)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.10.1.3.3
+          key: system.cpu.load.avg15
+          history: 7d
+          value_type: FLOAT
+          description: 'MIB: UCD-SNMP-MIB'
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: 81e7a6be4a3643ec9995db9fd5632bc9
+          name: 'CPU nice time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.51.0
+          key: 'system.cpu.nice[ssCpuRawNice.0]'
+          history: 7d
+          trends: '0'
+          value_type: TEXT
+          description: |
+            MIB: UCD-SNMP-MIB
+            The time the CPU has spent running users' processes that have been niced.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: 0fa3dc14f9fd4e7f86a5e4c6be81f87c
+          name: 'Number of CPUs'
+          type: SNMP_AGENT
+          snmp_oid: 'discovery[{#SNMPVALUE},1.3.6.1.2.1.25.3.3.1.1]'
+          key: 'system.cpu.num[snmp]'
+          history: 7d
+          description: |
+            MIB: HOST-RESOURCES-MIB
+            Count the number of CPU cores by counting number of cores discovered in hrProcessorTable using LLD
+          preprocessing:
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //count the number of cores
+                  return JSON.parse(value).length;
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: 11049b0842e74bb89f928ce14fc220fa
+          name: 'CPU system time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.52.0
+          key: 'system.cpu.system[ssCpuRawSystem.0]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: |
+            MIB: UCD-SNMP-MIB
+            The time the CPU has spent running the kernel and its processes.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: e636ccab02314a8c9df1a085451bcd1f
+          name: 'CPU user time'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.11.50.0
+          key: 'system.cpu.user[ssCpuRawUser.0]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: |
+            MIB: UCD-SNMP-MIB
+            The time the CPU has spent running users' processes that are not niced.
+          preprocessing:
+            -
+              type: CHANGE_PER_SECOND
+              parameters:
+                - ''
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //to get utilization in %, divide by N, where N is number of cores.
+                  return value/2
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: c3cb8aaa528646b2b0b2dca249e8307e
+          name: 'CPU utilization'
+          type: DEPENDENT
+          key: 'system.cpu.util[snmp,0]'
+          delay: '0'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          description: 'CPU utilization in %'
+          preprocessing:
+            -
+              type: JAVASCRIPT
+              parameters:
+                - |
+                  //Calculate utilization
+                  return (100 - value)
+          master_item:
+            key: 'system.cpu.idle[ssCpuRawIdle.0]'
+          tags:
+            -
+              tag: Application
+              value: CPU
+        -
+          uuid: b43757cfc42e48708a5751655de336f0
+          name: 'System description'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.1.0
+          key: 'system.descr[sysDescr.0]'
+          delay: 1h
+          history: 2w
+          trends: '0'
+          value_type: CHAR
+          description: |
+            MIB: SNMPv2-MIB
+            A textual description of the entity. This value should
+            include the full name and version identification of the system's hardware type, software operating-system, and
+            networking software.
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1d
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: 19cf9c72b50c4b51810e6ee3b369c614
+          name: 'System location'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.6.0
+          key: 'system.location[sysLocation.0]'
+          delay: 1h
+          history: 2w
+          trends: '0'
+          value_type: CHAR
+          description: |
+            MIB: SNMPv2-MIB
+            The physical location of this node (e.g., `telephone closet, 3rd floor').  If the location is unknown, the value is the zero-length string.
+          inventory_link: LOCATION
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: 07c8084877ca422680a20329ad443635
+          name: 'System name'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.5.0
+          key: system.name
+          delay: 1h
+          history: 2w
+          trends: '0'
+          value_type: CHAR
+          description: |
+            MIB: SNMPv2-MIB
+            An administratively-assigned name for this managed node.By convention, this is the node's fully-qualified domain name.  If the name is unknown, the value is the zero-length string.
+          inventory_link: NAME
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: 576d6c4cd3664238a9c4649ca287223e
+          name: 'System object ID'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.2.0
+          key: 'system.objectid[sysObjectID.0]'
+          delay: 15m
+          history: 2w
+          trends: '0'
+          value_type: CHAR
+          description: |
+            MIB: SNMPv2-MIB
+            The vendor's authoritative identification of the network management subsystem contained in the entity.  This value is allocated within the SMI enterprises subtree (1.3.6.1.4.1) and provides an easy and unambiguous means for determining`what kind of box' is being managed.  For example, if vendor`Flintstones, Inc.' was assigned the subtree1.3.6.1.4.1.4242, it could assign the identifier 1.3.6.1.4.1.4242.1.1 to its `Fred Router'.
+          preprocessing:
+            -
+              type: DISCARD_UNCHANGED_HEARTBEAT
+              parameters:
+                - 1h
+          tags:
+            -
+              tag: Application
+              value: General
+        -
+          uuid: 29e5063d48ed44e68100bb2d410de909
+          name: 'Free swap space'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.4.0
+          key: 'system.swap.free[memAvailSwap.0]'
+          history: 7d
+          units: B
+          description: |
+            MIB: UCD-SNMP-MIB
+            The amount of swap space currently unused or available.
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 635a93a7e4234f25b3b6978fc4195e8f
+          name: 'Free swap space in %'
+          type: CALCULATED
+          key: 'system.swap.pfree[snmp]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          params: 'last(//system.swap.free[memAvailSwap.0])/last(//system.swap.total[memTotalSwap.0])*100'
+          description: 'The free space of swap volume/file in percent.'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 0bbbde3bcaf74bef9ca0ed800a963eb9
+          name: 'Total swap space'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.3.0
+          key: 'system.swap.total[memTotalSwap.0]'
+          history: 7d
+          units: B
+          description: |
+            MIB: UCD-SNMP-MIB
+            The total amount of swap space configured for this host.
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 6fec45b4a34943f68484151d176ab111
+          name: Uptime
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.2.1.1.3.0
+          key: 'system.uptime[sysUpTime.0]'
+          delay: 30s
+          history: 2w
+          trends: 0d
+          units: uptime
+          description: |
+            MIB: SNMPv2-MIB
+            The time (in hundredths of a second) since the network management portion of the system was last re-initialized.
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '0.01'
+          tags:
+            -
+              tag: Application
+              value: Status
+        -
+          uuid: c12e52b2084c4c7c88b01b007000cae4
+          name: 'Available memory'
+          type: CALCULATED
+          key: 'vm.memory.available[snmp]'
+          history: 7d
+          units: B
+          params: 'last(//vm.memory.free[memAvailReal.0])+last(//vm.memory.buffers[memBuffer.0])+last(//vm.memory.cached[memCached.0])'
+          description: 'Please note that memory utilization is a rough estimate, since memory available is calculated as free+buffers+cached, which is not 100% accurate, but the best we can get using SNMP.'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 875a400562084aa5bc0c26adfe632c40
+          name: 'Memory (buffers)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.14.0
+          key: 'vm.memory.buffers[memBuffer.0]'
+          history: 7d
+          units: B
+          description: |
+            MIB: UCD-SNMP-MIB
+            Memory used by kernel buffers (Buffers in /proc/meminfo)
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: c594813ea01949348691ad235d168a6c
+          name: 'Memory (cached)'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.15.0
+          key: 'vm.memory.cached[memCached.0]'
+          history: 7d
+          units: B
+          description: |
+            MIB: UCD-SNMP-MIB
+            Memory used by the page cache and slabs (Cached and Slab in /proc/meminfo)
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 3ebed0e63bb54350ab18d3b7f412d37d
+          name: 'Free memory'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.6.0
+          key: 'vm.memory.free[memAvailReal.0]'
+          history: 7d
+          units: B
+          description: 'MIB: UCD-SNMP-MIB'
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: a7339492e7ec4608a6ae5f0c99f5e785
+          name: 'Total memory'
+          type: SNMP_AGENT
+          snmp_oid: 1.3.6.1.4.1.2021.4.5.0
+          key: 'vm.memory.total[memTotalReal.0]'
+          history: 7d
+          units: B
+          description: |
+            MIB: UCD-SNMP-MIB
+            Total memory in Bytes
+          preprocessing:
+            -
+              type: MULTIPLIER
+              parameters:
+                - '1024'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: 81de7783fa0141669526a0e3188883c5
+          name: 'Memory utilization'
+          type: CALCULATED
+          key: 'vm.memory.util[snmp]'
+          history: 7d
+          value_type: FLOAT
+          units: '%'
+          params: '(last(//vm.memory.total[memTotalReal.0])-(last(//vm.memory.free[memAvailReal.0])+last(//vm.memory.buffers[memBuffer.0])+last(//vm.memory.cached[memCached.0])))/last(//vm.memory.total[memTotalReal.0])*100'
+          description: 'Please note that memory utilization is a rough estimate, since memory available is calculated as free+buffers+cached, which is not 100% accurate, but the best we can get using SNMP.'
+          tags:
+            -
+              tag: Application
+              value: Memory
+        -
+          uuid: ff940d88f42f435cbb7eeb54abd6a237
+          name: 'SNMP agent availability'
+          type: INTERNAL
+          key: 'zabbix[host,snmp,available]'
+          history: 7d
+          tags:
+            -
+              tag: Application
+              value: Status
