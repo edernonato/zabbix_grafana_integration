@@ -12,6 +12,9 @@ architecture the pc is running and install the respective version of Zabbix agen
 ![Windows Grafana DashBoard 5 Zabbix Metrics](https://user-images.githubusercontent.com/99426154/202269894-9162dac6-2082-4793-9294-c291635b8c68.png)
 ![Zabbix Server Grafana DashBoard 1 Zabbix Metrics](https://user-images.githubusercontent.com/99426154/202269924-07fa9b99-eb39-472e-8e46-88f944a7666f.png)
 ![Windows Grafana Playlist 1 Zabbix Metrics](https://user-images.githubusercontent.com/99426154/202269960-7417a197-457b-4fad-a8f0-e653d45664ef.gif)
+![Variables Grafana Dashboard](https://user-images.githubusercontent.com/99426154/202284312-d073d35d-d476-4971-9d90-047a8247eb4e.gif)
+
+Using Variables in Grafana Dashboard:
 https://user-images.githubusercontent.com/99426154/202283423-b16a5674-7382-4293-8fa6-d6effe87c3d9.mp4
 
 
