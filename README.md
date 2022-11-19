@@ -24,4 +24,4 @@ https://user-images.githubusercontent.com/99426154/202283423-b16a5674-7382-4293-
 
 <h4 align="left"> Kerio Control Firewall Template: 31 Items using SNMP oid's.
   Windows Template by Eder: 10 items using bat and wmi commands and 2 triggers.
-  Most windows commands are used to monitor changes in files, it was required in a very specific environment. 2 Items to monitor USB storage drivers connected to USB ports, and the Path of the drive, those items were also required in a very specific situation. Triggers activate and a USB storage drive is connected.</h5>
+  Most windows commands are used to monitor changes in files, it was required in a very specific environment. 2 Items to monitor USB storage drivers connected to USB ports, and the Path of the drive, those items were also required in a very specific situation. Triggers activate when a USB storage drive is connected.</h5>
